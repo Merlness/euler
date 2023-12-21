@@ -13,8 +13,4 @@
   (it "finds largest 1 digit pali" (should= 9 (euler-4 1 10)))
   (it "finds largest 2 digit pali" (should= 9009 (euler-4 10 100)))
   (it "Solves #4"
-    (should= 906609 (euler-4 100 1000)))
-
-  )
-
-(run-specs)
+    (should= 906609 (euler-4 100 1000))))

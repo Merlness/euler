@@ -16,3 +16,9 @@
         (recur (inc i) i max-palindrome))
       max-palindrome)))
 
+(defn euler-4 [start end]
+  (->> (for [i (range start end) j (range i end)] [i j])
+       (map #(apply * %))
+       (filter palindrome?)
+       (apply max)))
+

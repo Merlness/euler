@@ -4,8 +4,11 @@
   (= 0 (mod num x)))
 
 (defn prime? [num primes]
-  (not-any? #(divisible? num %) primes)
-  )
+  (let [primes<sqrt (filter #(<= % (Math/sqrt num)) primes)]
+    (not-any? #(divisible? num %) primes<sqrt)))
+
+;; could be faster with sieve Erotosthese?
+;; [x2 3 x4 5 x6 7 x8 x9 x10]
 
 (defn euler-7 [position]
   (loop [num 3
