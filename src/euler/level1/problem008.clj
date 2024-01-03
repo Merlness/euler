@@ -13,3 +13,10 @@
         (apply max products)
         (recur (rest coll)
                (cons (product n coll) products)))))
+
+;(defn euler-8 [n num]
+;  (->> (num->coll num)
+;       (iterate rest)
+;       (take-while seq)
+;       (map #(product n %))
+;       (apply max)))

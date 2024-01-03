@@ -10,9 +10,6 @@
 (defn sum-thousand? [[a b c]]
   (= 1000 (reduce + [a b c])))
 
-(defn sum-twelve? [[a b c]]
-  (= 12 (reduce + [a b c])))
-
 (defn pythagorean-triplet? [[a b c]]
   (= (+ (square a) (square b)) (square c)))
 
@@ -26,5 +23,4 @@
                         (pythagorean-triplet? triplet))]
          triplet)
        (map #(apply * %))
-       first
-       ))
+       first))
