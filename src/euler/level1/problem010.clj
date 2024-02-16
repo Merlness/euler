@@ -7,38 +7,32 @@
   (let [primes<sqrt (filter #(<= % (Math/sqrt num)) primes)]
     (not-any? #(divisible? num %) primes<sqrt)))
 
-(defn euler-10 [n]
-  (loop [num 3
-         primes [2]]
-    (cond
-      (prime? num primes) (recur (inc num) (conj primes num))
-      (<= n (last primes)) (reduce + (drop-last primes))
-      :else (recur (inc num) primes))))
+(defn products-list-from [num n]
+  (set (range (* 2 num) n num)))
 
+(defn square-plus [num n]
+  (let [square (* num num)]
+    (loop [non-primes []
+           new-number square]
+      (if (>= new-number n)
+        (set non-primes)
+        (recur (conj non-primes new-number) (+ new-number num))))))
 
 (defn sieve-of-Eratosthenes [n]
-  (loop [primes (vec (range 2 n))
-         num 2
-         limit (Math/sqrt n)]
-    (if (<= num limit)
-      (let [non-primes (set (range (* 2 num) n num))]
-        (recur  (vec (remove non-primes primes)) (inc num) limit))
-      (reduce + primes))))
-
-
-(comment
-;; Eratosthenes
-  (defn sieve-of-Eratosthenes [n]
+  (let [limit (Math/sqrt n)]
     (loop [primes (range 2 n)
-           num 2
-           limit (Math/sqrt n)]
+           index 0]
+      (if (<= (nth primes index) limit)
+        (let [num (nth primes index)
+              non-primes (products-list-from num n)
+              primes (vec (remove non-primes primes))]
+          (recur primes (inc index)))
+        primes))))
 
-      (if (<= num limit)
-        (do
-          (let [non-primes (range num n num)]
-            (recur (remove (set non-primes) primes) (inc num) limit)))
-        (reduce + primes))
-      )))
-
-;Finished in 18.64898 seconds
-    ;Finished in 3907.94172 seconds
+; A = (set (range 2 n))
+; for [i (range 2 (sqrt n))]
+;   if (A i)
+;      signma i^2 + xi, 0 <= x <= up to n
+;this in products list from
+(defn euler-10 [n]
+  (reduce + (sieve-of-Eratosthenes n)))
